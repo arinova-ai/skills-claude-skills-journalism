@@ -1004,7 +1004,7 @@ Background image (surf-generated or CSS gradient) dominates the viewport. Text o
 
 ```html
 <section class="slide slide--bleed">
-  <div class="slide__bg" style="background-image:url('data:image/png;base64,...')"></div>
+  <div class="slide__bg" style="background-image:url('./assets/slide-background.png')"></div>
   <div class="slide__scrim"></div>
   <div class="slide__content">
     <h2 class="slide__heading reveal">Headline Over Image</h2>
@@ -1135,12 +1135,10 @@ which surf
 # Generate (one per target slide)
 surf gemini "descriptive prompt matching deck palette" --generate-image /tmp/ve-slide-title.png --aspect-ratio 16:9
 
-# Base64 encode for self-containment (macOS)
-TITLE_IMG=$(base64 -i /tmp/ve-slide-title.png)
-# Linux: TITLE_IMG=$(base64 -w 0 /tmp/ve-slide-title.png)
-
-# Embed in the slide
-# <div class="slide__bg" style="background-image:url('data:image/png;base64,${TITLE_IMG}')"></div>
+# Keep generated media as an explicit, reviewable relative asset
+mkdir -p assets
+cp /tmp/ve-slide-title.png assets/slide-title.png
+# Embed with: <div class="slide__bg" style="background-image:url('./assets/slide-title.png')"></div>
 
 # Clean up
 rm /tmp/ve-slide-title.png

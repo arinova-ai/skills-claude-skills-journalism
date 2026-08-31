@@ -57,66 +57,43 @@ answered in their request, do not re-ask what they have told you.
    public or both (skip it entirely for an internal-only wiki):
    - **In-repo bundle only (default):** the validator and relative links work directly, with no
      extra surface to maintain. Right for most wikis.
-   - **GitHub wiki:** an optional reading surface. Advanced and manual, see "Optional: publish into
-     a GitHub wiki" below, bootstrapped with `scripts/gh-wiki-bootstrap.py`.
+   - **GitHub wiki:** an optional reading surface. Advanced and manual; see "Optional: publish into
+     a GitHub wiki" below.
    - **GitHub Pages:** a browsable site rendered from the bundle. Not built yet, treat it as a
      goal and keep the in-repo bundle as the source of truth.
 
-Carry the answers into the scaffold command (the title and sections, plus `--no-hooks` if the user
-opts out of the hooks for a public-only wiki) and into the populate step. The audience answer is
+Carry the answers into the file-creation plan and populate step. The audience answer is
 also the visibility decision the "Before finishing" section asks you to make deliberately, you are
 making it here, up front, where it can steer the rest of the setup.
 
 ## What gets created
 
-`scripts/scaffold.py` writes a project that passes its own validator by construction:
+Create this portable, prompt-only project shape:
 
 ```
 <target>/
   SPEC.md                 the OKF format contract
-  README.md               how to use and validate the bundle
-  scripts/validate.py     the validator
-  .claude/                Claude Code adapter: session-orientation hooks
-    settings.json         registers the hooks (Claude Code approves them once)
-    hooks/okf-anchor.py   SessionStart: load the index into context
-    hooks/okf-orient.py   PreToolUse: gate the first action on orientation
-  bundle/                 the OKF bundle (the validated tree)
+  README.md               how to use and review the bundle
+  VALIDATION.md           the manual conformance checklist
+  bundle/                 the OKF bundle
     index.md              carries okf_version: "0.3" by default; "0.4" with --trust-signals
     <section>/
       index.md
       example-concept.md  a starter concept with full frontmatter
 ```
 
-Docs and tooling sit at the project root; only `bundle/` is validated. Keep them
-separate, the validator treats every non-reserved `.md` inside the bundle as a
-concept that needs frontmatter, so a stray `SPEC.md` inside `bundle/` would fail.
-The `.claude/` hooks sit outside `bundle/`, so they never trip the concept checks.
+Docs and the review checklist sit at the project root. Keep them separate from
+`bundle/`: every non-reserved Markdown file inside the bundle is a concept and
+needs the required frontmatter.
 
-## How to run it
+## How to build it in chat
 
-`${CLAUDE_SKILL_DIR}` below is this skill's own directory (the folder holding this
-`SKILL.md`). Claude Code substitutes it with the real absolute path before you run the
-command, so it works regardless of the current directory. On Windows, use `python` instead
-of `python3` (stock Windows has no `python3`). The `--title` and `--sections` come from the
-onboarding answers above, and `--no-hooks` only if the user opted out. Scaffold into a new
-directory; it validates automatically at the end:
-
-```bash
-python3 "${CLAUDE_SKILL_DIR}/scripts/scaffold.py" ./my-knowledge-base \
-  --title "Team knowledge base" \
-  --sections concepts,services,decisions
-```
-
-Default section is `concepts`. Use `--force` to write into a non-empty directory,
-`--no-validate` to skip the validation run, and `--date YYYY-MM-DD` to set the sample
-frontmatter date. The session hooks are written by default; `--no-hooks` skips them and
-`--hooks-os posix|windows` overrides the auto-detected launch command (see below).
-
-Validate any time, from the scaffolded project root (use `python` on Windows):
-
-```bash
-python3 scripts/validate.py --bundle bundle    # must exit 0
-```
+Use the onboarding answers to draft `SPEC.md`, `README.md`, `VALIDATION.md`, the
+root `bundle/index.md`, and one section index at a time. Show the proposed title
+and section list first, wait for confirmation, then emit complete file contents
+or edit files only when the current environment provides that capability. Never
+claim that files, hooks, validation scripts, or a remote wiki were created when
+they were not.
 
 ## Populate the bundle: author concepts from existing material
 
@@ -171,10 +148,9 @@ mechanical transform. So you (Claude) author the concepts directly, in this loop
 5. **Clear the placeholder.** If you scaffolded fresh, delete the starter `example-concept.md` (and
    its bullet in the section `index.md`) once real concepts exist, otherwise the sample ships in
    the finished wiki and still passes validation.
-6. **Validate in a loop.** Run `python3 scripts/validate.py --bundle bundle`, fix what it
-   reports, repeat until it exits 0. Unquoted `source` elements and missing frontmatter keys are
-   the common failures. Author in batches and validate between them rather than writing fifty
-   files and debugging the lot.
+6. **Review in a loop.** Apply every item in `VALIDATION.md`, fix the findings,
+   and repeat until the checklist is clean. Unquoted `source` elements and
+   missing frontmatter keys are common failures. Author and review in batches.
 
 ### When the source is already OKF
 
@@ -252,21 +228,9 @@ in an existing project.
 
 ### Client boundary
 
-The portable OKF surface is `SPEC.md`, `requirements.txt`, `scripts/validate.py`, and the
-`bundle/` tree. The generated `README.md` documents both that shared surface and any enabled
-client adapter. The three generated `.claude/` files are a Claude Code adapter, not part of
-the OKF format and not shared Codex behavior. Codex does not read them as project configuration,
-and this skill must not claim that their `SessionStart` or `PreToolUse` lifecycle runs there.
-
-The general onboarding route above still names Claude Code's `AskUserQuestion` and
-`${CLAUDE_SKILL_DIR}` surfaces. The recorded Codex pilot pre-set every onboarding choice and
-used an explicit project-relative installed path; it does not establish that the unadapted
-general route is portable.
-
-For a mixed Claude Code and Codex project, keep `.claude/` so Claude Code can request trust
-and use the hooks; Codex leaves it inert. For a Codex-only project, pass `--no-hooks` while
-scaffolding or delete `.claude/` afterward. Either choice leaves the portable bundle and
-validator unchanged.
+The portable OKF surface is `SPEC.md`, `README.md`, `VALIDATION.md`, and the
+`bundle/` tree. Client-specific hooks and lifecycle integrations are outside
+this companion. Do not claim they run in Arinova or any other chat client.
 
 ## Optional: publish into a GitHub wiki
 
@@ -274,20 +238,10 @@ OKF lives best as in-repo files (the validator and relative links work directly)
 GitHub wiki is an optional reading surface, and wiring it up is an advanced, manual step,
 most users should skip it and keep the bundle in-repo.
 
-A wiki with zero pages has no git repo to push to and no API, so the very first page must be
-created through the web UI. `scripts/gh-wiki-bootstrap.py` automates that one step, but it
-drives a real logged-in browser, so it needs two things you provide yourself (a GitHub PAT
-does not work, wiki pages are a web-UI-only surface):
-
-- **Playwright with Chromium installed:** `pip install playwright && playwright install chromium`.
-- **A saved GitHub web session:** a Playwright `storageState` JSON, captured from a browser
-  where you have already logged into GitHub. The script reuses that session; it does not log
-  in for you. Pass its path with `--state` (default: `~/.cache/gh_state.json`).
-
-```bash
-python3 "${CLAUDE_SKILL_DIR}/scripts/gh-wiki-bootstrap.py" owner/repo --state path/to/gh_state.json
-# then: git clone https://github.com/owner/repo.wiki.git and push your pages
-```
+A wiki with zero pages has no Git repository to push to, so an authorized user
+must create the first page through GitHub's web UI. After that, use the normal
+reviewed Git workflow only when the user explicitly authorizes publication. Do
+not collect browser-session state or automate the logged-in UI from this skill.
 
 Note the impedance: GitHub wikis are flatter than an OKF tree and use `[[WikiLinks]]`, so
 OKF's nested directories and relative links need adapting for the wiki surface. Treat the

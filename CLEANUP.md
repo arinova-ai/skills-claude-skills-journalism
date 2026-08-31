@@ -23,11 +23,31 @@ Excluded:
   fixture, and other test-only metadata not needed by the skill;
 - visual-explainer command wrappers, which are Claude plugin UI wrappers rather
   than skill resources.
+- the PDF design template's embedded bitmap payload; the source HTML SHA-256 was
+  `c93292f1ffee60144590c0736c371b4219b5025842f48abeb208c32f54974c05`,
+  and the prompt now asks for a user/project-supplied reviewed template.
+
+Adapted after the first production screen:
+
+- blocked local-file, loopback, script-URL, and embedded-data URL literals were
+  changed to explicit placeholders, relative assets, or platform-provided URLs;
+- one prose field that looked like a literal credential assignment was changed
+  to an unambiguous parameter description;
+- Open Knowledge Format instructions were made prompt-only and no longer claim
+  unavailable client hooks, browser-session automation, or helper execution;
+- `secure-auth` was reduced below the 50,000-character prompt ceiling while its
+  exact upstream body was preserved in a selected reference file;
+- unsafe executable/vendor resources remain outside the import selection.
+
+Every content change is itemized in [`ADAPTATIONS.md`](ADAPTATIONS.md).
 
 Verification for this companion:
 
 - exactly 63 `SKILL.md` files;
-- every selected `SKILL.md` matches the reviewed upstream commit byte for byte;
+- 50 `SKILL.md` files match the reviewed upstream commit byte for byte and 13
+  preserve their identity with documented prompt-only adaptations;
+- `security-toolkit/skills/secure-auth/references/upstream-secure-auth-details.md`
+  matches the original `secure-auth/SKILL.md` at SHA-256
+  `2c61e8a4e32ab9c2e04fdde5f0adcaa9c9644c7770d83561cc84c1a5fc9b9966`;
 - no symlinks;
 - gitleaks v8.21.2 `detect --no-git --redact`: zero findings.
-

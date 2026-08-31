@@ -170,7 +170,7 @@ Start a local server and verify:
 
 ```bash
 cd {project-dir} && python -m http.server --bind 127.0.0.1 8888
-# Open http://localhost:8888/web/index.html
+# Open /web/index.html using the loopback origin printed by the server
 ```
 
 Check: charts render, video grid populates, search works, platform filters work across sections.

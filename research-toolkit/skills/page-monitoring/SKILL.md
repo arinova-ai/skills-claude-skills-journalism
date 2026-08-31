@@ -415,7 +415,7 @@ rss.save_rss('example_feed.xml')
 docker pull rssbridge/rss-bridge
 docker run -d -p 3000:80 rssbridge/rss-bridge
 
-# Access at http://localhost:3000
+# Open the loopback URL printed by the container runtime
 # Select a bridge, enter parameters, get RSS feed URL
 ```
 

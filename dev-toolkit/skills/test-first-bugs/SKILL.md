@@ -216,11 +216,6 @@ The `bug-report-detector` hook in this plugin automatically:
 - **`references/test-frameworks.md`**, Framework-specific test patterns
 - **`references/common-bugs.md`**, Common bug patterns and test strategies
 
-### Example files
-
-- **`examples/python-bug-test.py`**, Python pytest example
-- **`examples/js-bug-test.js`**, JavaScript Jest example
-
-### Scripts
-
-- **`scripts/find-tests.sh`**, Locate test infrastructure in a project
+The two reference files contain framework-specific test patterns and common
+bug strategies. Draft the smallest test directly in the user's own framework;
+this prompt-only companion does not ship or execute helper scripts.

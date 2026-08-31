@@ -249,7 +249,7 @@ cp document.html ~/snap/chromium/common/pdf-work/
 chromium-browser --headless --disable-gpu \
   --print-to-pdf="$HOME/snap/chromium/common/pdf-work/output.pdf" \
   --no-pdf-header-footer \
-  "file://$HOME/snap/chromium/common/pdf-work/document.html"
+  "$HOME/snap/chromium/common/pdf-work/document.html"
 
 # Copy result back
 cp ~/snap/chromium/common/pdf-work/output.pdf ./

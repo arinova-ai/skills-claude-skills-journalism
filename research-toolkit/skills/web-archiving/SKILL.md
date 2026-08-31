@@ -604,34 +604,34 @@ class PermaCC:
             return None
 ```
 
-## Browser extensions and bookmarklets
+## Browser-console archive helpers
 
-### Quick archive bookmarklet
+### Quick archive helper
 
 ```javascript
-// Save to Wayback Machine - add as bookmark
-javascript:(function(){
+// Paste in DevTools to save to Wayback Machine
+(function(){
     window.open('https://web.archive.org/save/' + encodeURIComponent(location.href), '_blank');
 })();
 
-// Save to Archive.today
-javascript:(function(){
+// Paste in DevTools to save to Archive.today
+(function(){
     window.open('https://archive.today/?run=1&url=' + encodeURIComponent(location.href), '_blank');
 })();
 
-// Check all archives (Memento)
-javascript:(function(){
+// Paste in DevTools to check all archives (Memento)
+(function(){
     window.open('https://timetravel.mementoweb.org/list/0/' + encodeURIComponent(location.href), '_blank');
 })();
 ```
 
-### Resurrect dead pages bookmarklet
+### Resurrect dead pages helper
 
 ```javascript
 // Try multiple archives for dead pages
 // Note: Google Cache (webcache.googleusercontent.com) was retired in
 // Sept 2024 and is omitted here.
-javascript:(function(){
+(function(){
     // Encode location.href so any '#' / '?' inside it travels as part
     // of the path argument; raw concatenation lets the browser strip
     // fragments and re-attach query strings to the outer URL.

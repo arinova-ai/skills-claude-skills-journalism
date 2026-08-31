@@ -40,7 +40,7 @@ During a design session, use these commands:
 
 ```bash
 # Copy template to start new report
-cp ~/.claude/plugins/pdf-design/templates/democracy-day-proposal.html ./new-report.html
+cp /path/to/reviewed-template.html ./new-report.html
 
 # Generate PDF (must use snap-accessible path)
 mkdir -p ~/snap/chromium/common/pdf-work
@@ -49,7 +49,7 @@ chromium-browser --headless --disable-gpu \
   --blink-settings=scriptEnabled=false \
   --print-to-pdf="$HOME/snap/chromium/common/pdf-work/output.pdf" \
   --no-pdf-header-footer \
-  "file://$HOME/snap/chromium/common/pdf-work/new-report.html"
+  "$HOME/snap/chromium/common/pdf-work/new-report.html"
 ```
 
 ## Document types
@@ -218,7 +218,7 @@ chromium-browser --headless --disable-gpu \
   --blink-settings=scriptEnabled=false \
   --print-to-pdf="$HOME/snap/chromium/common/pdf-work/output.pdf" \
   --no-pdf-header-footer \
-  "file://$HOME/snap/chromium/common/pdf-work/template.html"
+  "$HOME/snap/chromium/common/pdf-work/template.html"
 cp ~/snap/chromium/common/pdf-work/output.pdf ./
 ```
 
@@ -239,7 +239,7 @@ chromium-browser --headless --disable-gpu \
   --blink-settings=scriptEnabled=false \
   --screenshot="$HOME/snap/chromium/common/pdf-work/preview.png" \
   --window-size=1275,1650 \
-  "file://$HOME/snap/chromium/common/pdf-work/template.html"
+  "$HOME/snap/chromium/common/pdf-work/template.html"
 cp "$HOME/snap/chromium/common/pdf-work/preview.png" ./preview.png
 ```
 
@@ -456,4 +456,4 @@ If a page feels too crowded, *reduce content*, don't expand spacing.
 
 ## Template
 
-Reference: `~/.claude/plugins/pdf-design/templates/democracy-day-proposal.html`
+Reference: use a reviewed house template supplied by the user or project.

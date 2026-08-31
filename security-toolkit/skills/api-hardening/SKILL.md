@@ -73,7 +73,7 @@ Real 2023-2024 incidents that anchor the patterns in this skill. Cite these when
 
 - **Polyfill.io supply-chain attack (2024-06-25).** Funnull acquired the polyfill.io domain in February 2024 and injected malware into roughly 110,000 sites that loaded the script (per https://sansec.io/research/polyfill-supply-chain-attack). Lesson: every third-party `<script>` and `<link rel="stylesheet">` needs a Subresource Integrity hash and a strict CSP; "trusted CDN" is not a guarantee.
 - **23andMe credential stuffing (disclosed 2023-10).** Attackers reused leaked credentials against 23andMe accounts, then pivoted via the DNA Relatives feature to enumerate roughly 6.9 million users from a smaller initial-account compromise (per https://blog.23andme.com/articles/addressing-data-security-concerns). Lesson: per-IP rate limits don't catch distributed credential stuffing, and per-account read quotas on graph or relationship endpoints are needed to cap the blast radius.
-- **MOVEit Transfer CVE-2023-34362 (disclosed 2023-05-31).** A pre-authentication SQL injection in Progress MOVEit Transfer (per https://nvd.nist.gov/vuln/detail/CVE-2023-34362) was used by Cl0p to exfiltrate data from thousands of organizations, and the chain landed in the CISA KEV catalog. Lesson: parameterized queries are not optional, even on file-transfer paths that don't look like "user-facing APIs."
+- **MOVEit Transfer CVE-2023-34362 (disclosed 2023-05-31).** A pre-authentication SQL injection in Progress MOVEit Transfer (per https://nvd.nist.gov/vuln/detail/CVE-2023-34362) was used by Cl0p to steal data from thousands of organizations, and the chain landed in the CISA KEV catalog. Lesson: parameterized queries are not optional, even on file-transfer paths that don't look like "user-facing APIs."
 - **Ivanti Connect Secure zero-day chain (disclosed 2024-01).** CVE-2023-46805 (auth bypass) and CVE-2024-21887 (command injection) chained for unauthenticated remote code execution (per https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-060b). Lesson: command injection (CWE-78) plus auth bypass is the modern unauthenticated-RCE recipe; both halves need defenses.
 
 ## Rate limiting
@@ -249,7 +249,7 @@ async function apiKeyRateLimiter(req, res, next) {
 
 ### Per-account graph-traversal quota (23andMe lesson)
 
-Endpoints that expand a relationship or graph one hop at a time (DNA relatives, contact networks, follower fan-out, organization-membership lookups) are the textbook case for per-account quotas in addition to per-IP. A single compromised account inside a per-IP budget can still walk the graph and exfiltrate data on every other connected account, which is what amplified the 23andMe credential-stuffing breach.
+Endpoints that expand a relationship or graph one hop at a time (DNA relatives, contact networks, follower fan-out, organization-membership lookups) are the textbook case for per-account quotas in addition to per-IP. A single compromised account inside a per-IP budget can still walk the graph and extract data from every other connected account, which is what amplified the 23andMe credential-stuffing breach.
 
 ```javascript
 // Per-account daily budget for graph-expansion endpoints
@@ -552,11 +552,11 @@ Maps to API8:2023 (security misconfiguration).
 ```javascript
 const cors = require('cors');
 
-// Development: Allow localhost
+// Development: allow only the exact development frontends you control.
+// Documentation-only .invalid hosts make the substitution explicit.
 const developmentOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173',
-  'http://127.0.0.1:3000'
+  'https://app.dev.example.invalid',
+  'https://admin.dev.example.invalid'
 ];
 
 // Production: Specific domains only

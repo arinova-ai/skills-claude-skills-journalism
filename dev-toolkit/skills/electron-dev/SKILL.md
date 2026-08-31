@@ -41,8 +41,8 @@ CVE-2023-44402 (ASAR integrity bypass via filetype confusion) was the canonical 
 ### Common renderer-side risks
 
 - **Preload script confusion**, only expose narrow, typed surfaces via `contextBridge.exposeInMainWorld`. Never re-export `ipcRenderer` itself; expose specific methods that map to specific channels.
-- **`file://` IPC and navigation**, restrict navigation with `webContents.on('will-navigate', e => e.preventDefault())` for windows that shouldn't change URL. Deny `setWindowOpenHandler` requests by default; allow-list specific origins.
-- **`shell.openExternal` with user input**, validate the URL scheme before opening. An attacker-controlled `file://` or `javascript:` URL hands them code execution.
+- **Local-file IPC and navigation**, restrict navigation with `webContents.on('will-navigate', e => e.preventDefault())` for windows that shouldn't change URL. Deny `setWindowOpenHandler` requests by default; allow-list specific origins.
+- **`shell.openExternal` with user input**, validate the URL scheme before opening. Attacker-controlled local-file or script URL schemes can hand them code execution.
 
 ## Architecture patterns
 

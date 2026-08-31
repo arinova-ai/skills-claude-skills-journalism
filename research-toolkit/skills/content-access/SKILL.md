@@ -244,7 +244,7 @@ def search_openalex(query: str, api_key: str, limit: int = 25,
 
     Args:
         query: free-text search string.
-        api_key: OpenAlex API key (required as of 2026-02-13).
+        api_key parameter — OpenAlex API credential (required as of 2026-02-13).
         limit: max results per page (1-200).
         email: contact email for the polite pool, recommended even
                with a key, since OpenAlex prioritizes requests with
@@ -302,21 +302,21 @@ rates without legal exposure.
 
 ### Activating reader mode
 
-This bookmarklet only works for **soft / metered paywalls** where the
+This reader-mode snippet only works for **soft / metered paywalls** where the
 publisher loads the article HTML and visually overlays a subscription
 prompt, the content is already in the DOM, just hidden. It does
 **not** defeat hard paywalls (NYT, WSJ, FT, The Atlantic, Bloomberg,
 Stratechery, etc.) where article HTML is server-side gated; on those
-sites the bookmarklet simply removes overlays and reveals nothing
+sites the snippet simply removes overlays and reveals nothing
 useful. Systematic use to read otherwise-paywalled content may
 violate the publisher's ToS, use it only as a reader-mode shim for
 content you legitimately have access to.
 
 ```javascript
-// Bookmarklet to strip soft-paywall overlays so reader mode works
+// Paste into DevTools to strip soft-paywall overlays so reader mode works
 // Works on some soft paywalls that load content before blocking
 
-javascript:(function(){
+(function(){
     // Try to extract article content
     var article = document.querySelector('article') ||
                   document.querySelector('[role="main"]') ||

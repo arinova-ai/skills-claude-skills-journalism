@@ -74,9 +74,9 @@ Vary the choice each time. If the last diagram was dark and technical, make the 
 
 **Read the reference material** before generating. Don't memorize it, read it each time to absorb the patterns.
 - For text-heavy architecture overviews (card content matters more than topology): read `./templates/architecture.html`
-- For flowcharts, sequence diagrams, ER, state machines, mind maps, class diagrams, C4: read `./templates/mermaid-flowchart.html`
+- For flowcharts, sequence diagrams, ER, state machines, mind maps, class diagrams, and C4: use the Mermaid and CSS guidance in the reference files
 - For data tables, comparisons, audits, feature matrices, source verification grids: read `./templates/data-table.html`
-- For slide deck presentations (when `--slides` flag is present or `/generate-slides` is invoked): read `./templates/slide-deck.html` and `./references/slide-patterns.md`
+- For slide deck presentations (when `--slides` is explicitly requested): read `./references/slide-patterns.md`
 - For prose-heavy publishable pages (READMEs, articles, blog posts, essays): read the "Prose Page Elements" section in `./references/css-patterns.md` and "Typography by Content Voice" in `./references/libraries.md`
 
 **For CSS/layout patterns and SVG connectors**, read `./references/css-patterns.md`.
@@ -109,7 +109,7 @@ Vary the choice each time. If the last diagram was dark and technical, make the 
 
 **Mermaid containers.** Always center Mermaid diagrams with `display: flex; justify-content: center;`. Add zoom controls (+/−/reset/expand) to every `.mermaid-wrap` container. Include the click-to-expand JavaScript so clicking the diagram (or the ⛶ button) opens it full-size in a new tab.
 
-**Never use bare `<pre class="mermaid">`.** It renders but has no zoom/pan controls, diagrams become tiny and unusable. Always use the journalism `mermaid-flowchart.html` pattern: a `.mermaid-wrap` container with `.zoom-controls` (+/−/reset/expand buttons) wrapping a `.mermaid` element. The container's CSS handles overflow and pan affordances; the bundled JS wires zoom buttons, ctrl+scroll wheel zoom, click-and-drag panning, and click-to-expand into a new tab. Copy the template wholesale rather than reconstructing the pattern, and copy its sibling `templates/vendor/` directory so the pinned Mermaid import remains resolvable.
+**Never use bare `<pre class="mermaid">`.** It renders but has no zoom/pan controls, diagrams become tiny and unusable. Use a `.mermaid-wrap` container with `.zoom-controls` (+/−/reset/expand buttons) around the `.mermaid` element. If a reviewed local Mermaid runtime is unavailable, degrade to semantic HTML/CSS or inline SVG; do not fetch executable code at runtime.
 
 **Mermaid scaling.** Diagrams with 10+ nodes render too small by default. For 10–12 nodes, increase `fontSize` in themeVariables to 18–20px and set `INITIAL_ZOOM` to 1.5–1.6. For 15+ elements, don't try to scale, use the hybrid pattern instead (simple Mermaid overview + CSS Grid cards). See "Architecture / system diagrams" below.
 
@@ -125,12 +125,10 @@ Vary the choice each time. If the last diagram was dark and technical, make the 
 # Generate to a temp file (use --aspect-ratio for control)
 surf gemini "descriptive prompt" --generate-image /tmp/ve-img.png --aspect-ratio 16:9
 
-# Base64 encode for self-containment (macOS)
-IMG=$(base64 -i /tmp/ve-img.png)
-# Linux: IMG=$(base64 -w 0 /tmp/ve-img.png)
-
-# Embed in HTML and clean up
-# <img src="data:image/png;base64,${IMG}" alt="descriptive alt text">
+# Keep generated media as an explicit, reviewable relative asset
+mkdir -p assets
+cp /tmp/ve-img.png assets/ve-img.png
+# Embed with: <img src="./assets/ve-img.png" alt="descriptive alt text">
 rm /tmp/ve-img.png
 ```
 
@@ -301,7 +299,7 @@ Map relationships between sources in an investigation or story. Can use Mermaid 
 Connect entities (people, organizations, documents, events) with visual links. CSS Grid cards for entity profiles, Mermaid for relationship diagrams. Color-code by entity type. Show strength of connections. Good for investigative reporting, following the money, mapping power structures. The "investigation wall" aesthetic (red string, monochrome with red accents) suits this well.
 
 ### Editorial workflow
-Mermaid flowchart showing story lifecycle: pitch → assign → research → draft → edit → legal review → copy edit → layout → publish → distribute. Color-code stages. Show decision gates (kill/revise/approve). Include role labels on transitions. The reference template at `./templates/mermaid-flowchart.html` demonstrates this pattern.
+Mermaid flowchart showing story lifecycle: pitch → assign → research → draft → edit → legal review → copy edit → layout → publish → distribute. Color-code stages. Show decision gates (kill/revise/approve). Include role labels on transitions.
 
 ### Story structure
 CSS Grid visualization of narrative arc. Show sections, word counts, source distribution, multimedia placement. Good for planning longform features or reviewing story architecture before publication.
@@ -356,7 +354,7 @@ Use these sparingly within visual pages to highlight key points or provide breat
 
 An alternative output format for presenting content as a magazine-quality slide presentation instead of a scrollable page. **Opt-in only**, generate slides when the user invokes `/generate-slides`, passes `--slides` to an existing prompt (e.g. `/diff-review --slides`), or explicitly asks for a slide deck. Never auto-select slide format.
 
-**Before generating slides**, read `./references/slide-patterns.md` (engine CSS, slide types, transitions, nav chrome, presets) and `./templates/slide-deck.html` (reference template showing all 10 types). Also read `./references/css-patterns.md` for shared patterns and `./references/libraries.md` for Mermaid/Chart.js theming.
+**Before generating slides**, read `./references/slide-patterns.md` (engine CSS, slide types, transitions, nav chrome, presets). Also read `./references/css-patterns.md` for shared patterns and `./references/libraries.md` for Mermaid/Chart.js theming.
 
 **Slides are not pages reformatted.** They're a different medium. Each slide is exactly one viewport tall (100dvh) with no scrolling. Typography is 2–3× larger. Compositions are bolder. The agent composes a narrative arc (impact → context → deep dive → resolution) rather than mechanically paginating the source.
 
@@ -374,11 +372,9 @@ An alternative output format for presenting content as a magazine-quality slide 
 
 ## File structure
 
-Every diagram is a deployable `.html` file plus an optional local `vendor/`
-directory for lockfile-verified libraries. The Mermaid reference templates ship
-their required core bundle in `templates/vendor/`; preserve that sibling
-directory when copying a template. Do not fetch executable code from a runtime
-CDN. Structure:
+Every diagram is a deployable `.html` file. Use only reviewed libraries already
+provided by the user's project; otherwise prefer static CSS and inline SVG. Do
+not fetch executable code from a runtime CDN. Structure:
 
 ```html
 <!DOCTYPE html>
@@ -402,31 +398,11 @@ CDN. Structure:
 
 ## Sharing pages
 
-Share visual explainer pages instantly via Vercel when a Pi-compatible `vercel-deploy` skill is available. No account or authentication required.
-
-**Usage with the installed skill path:**
-```bash
-bash ~/.pi/agent/skills/visual-explainer/scripts/share.sh <html-file>
-```
-
-If the skill lives somewhere else, use that install path instead, such as `~/.codex/skills/visual-explainer/scripts/share.sh`, `~/.config/opencode/skill/visual-explainer/scripts/share.sh`, or `./plugins/visual-explainer/scripts/share.sh` from a repository checkout.
-
-**How it works:**
-1. Runs the `share.sh` script from the installed `visual-explainer` skill directory
-2. Copies HTML file to temp directory as `index.html`
-3. Deploys via the Pi-compatible `vercel-deploy` skill
-4. URL is live immediately, works in any browser
-
-**Requirements:**
-- vercel-deploy skill in a standard Pi-compatible skill location (in Pi: `pi install npm:vercel-deploy`)
-
-**Notes:**
-- Deployments are public, anyone with the URL can view
-- Preview deployments have configurable retention (default: 30 days)
-- Claim URL lets you transfer the deployment to your Vercel account
-- Other harnesses can generate and open HTML normally; `/share-page` depends on the Pi-compatible `vercel-deploy` script being available
-
-See `./commands/share-page.md` for the `/share-page` command template.
+Treat remote sharing as a separate, explicit user decision. First provide or
+preview the local HTML, identify whether the destination will be public, and
+wait for confirmation. Use only a deployment capability supplied and authorized
+by the current platform; this prompt-only companion includes no deployment
+wrapper and must not claim a live URL without verifying the external result.
 
 ## Quality checks
 

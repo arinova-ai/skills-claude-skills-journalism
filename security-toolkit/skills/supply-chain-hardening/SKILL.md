@@ -5,7 +5,7 @@ description: Install-time cooldowns for npm/bun plus a sandboxed pre-install sca
 
 # Supply-chain hardening
 
-Defends a journalism toolchain against the dominant npm/bun supply-chain attack pattern: a maintainer account or CI pipeline is compromised, a malicious version ships, and machines install it before anyone notices. Recent example: the **Mini Shai-Hulud TanStack attack (2026-05-11)** compromised 84 versions across 42 `@tanstack/*` packages and exfiltrated AWS / GCP / Vault / GitHub / SSH credentials via a postinstall script.
+Defends a journalism toolchain against the dominant npm/bun supply-chain attack pattern: a maintainer account or CI pipeline is compromised, a malicious version ships, and machines install it before anyone notices. Recent example: the **Mini Shai-Hulud TanStack attack (2026-05-11)** compromised 84 versions across 42 `@tanstack/*` packages and stole AWS / GCP / Vault / GitHub / SSH credentials via a postinstall script.
 
 The defense is **layered** and intentionally simple:
 

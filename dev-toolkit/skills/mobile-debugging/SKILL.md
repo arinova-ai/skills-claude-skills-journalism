@@ -51,16 +51,17 @@ sha256sum -c public/debug/SHA256SUMS
 
 ### Eruda bookmarklet (recommended)
 
-Add this only for a development page that serves the local file below:
+Add this only for a development page that serves the local file below. Paste
+the function into that page's DevTools console; do not save it as a URL:
 
 ```javascript
-javascript:(function(){var script=document.createElement('script');script.src='/debug/eruda-3.4.3.js';document.body.append(script);script.onload=function(){eruda.init();}})();
+(function(){var script=document.createElement('script');script.src='/debug/eruda-3.4.3.js';document.body.append(script);script.onload=function(){eruda.init();}})();
 ```
 
 ### vConsole bookmarklet
 
 ```javascript
-javascript:(function(){var script=document.createElement('script');script.src='/debug/vconsole-3.15.1.min.js';document.body.append(script);script.onload=function(){new VConsole();}})();
+(function(){var script=document.createElement('script');script.src='/debug/vconsole-3.15.1.min.js';document.body.append(script);script.onload=function(){new VConsole();}})();
 ```
 
 ## In-page console tools
@@ -283,7 +284,7 @@ brew install ios-webkit-debug-proxy
 # Run the proxy
 ios_webkit_debug_proxy -f chrome-devtools://devtools/bundled/inspector.html
 
-# Connect to http://localhost:9221 to see connected devices
+# Open the loopback inspection URL printed by the proxy to see connected devices
 ```
 
 ### Commercial: Inspect.dev

@@ -1744,7 +1744,7 @@ Full-width image cropped to a fixed height with a gradient fade into the page ba
 
 ```html
 <div class="hero-img-wrap">
-  <img src="data:image/png;base64,..." alt="Descriptive alt text">
+  <img src="./assets/hero.png" alt="Descriptive alt text">
 </div>
 ```
 
@@ -1778,7 +1778,7 @@ Centered image with border, shadow, and optional caption. Use within content sec
 
 ```html
 <figure class="illus">
-  <img src="data:image/png;base64,..." alt="Descriptive alt text">
+  <img src="./assets/illustration.png" alt="Descriptive alt text">
   <figcaption>How the message queue routes events between services</figcaption>
 </figure>
 ```
@@ -1809,5 +1809,5 @@ Small image floated beside a section. Use when the illustration supports but doe
 ```
 
 ```html
-<img class="accent-img" src="data:image/png;base64,..." alt="Descriptive alt text">
+<img class="accent-img" src="./assets/accent.png" alt="Descriptive alt text">
 ```
