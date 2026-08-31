@@ -18,7 +18,7 @@ line-level diff; this document records the intent and boundary of every change.
 | `research-toolkit/skills/page-monitoring/SKILL.md` | Blocked loopback URL literal | Refers to the loopback URL printed by the container runtime. |
 | `research-toolkit/skills/web-archiving/SKILL.md` | Blocked script URL literals | Presents archive helpers as DevTools-console functions, preserving their destinations and behavior. |
 | `security-toolkit/skills/api-hardening/SKILL.md` | Blocked loopback examples and deterministic exfiltration phrase | Uses documentation-only `.invalid` origins and neutral breach wording; controls and lessons are unchanged. |
-| `security-toolkit/skills/secure-auth/SKILL.md` | Original prompt exceeded the 50,000-character limit | Replaced the activation prompt with a concise current-source, threat-model, control, output, and verification workflow; preserved the exact upstream body as `references/upstream-secure-auth-details.md`. |
+| `security-toolkit/skills/secure-auth/SKILL.md` | Original prompt exceeded the 50,000-character limit | Replaced the activation prompt with a concise current-source, threat-model, control, output, and verification workflow; preserved the exact upstream body as a companion-only audit file that is not imported. |
 | `security-toolkit/skills/supply-chain-hardening/SKILL.md` | Deterministic exfiltration phrase | Replaced one breach verb with neutral wording; the incident and control guidance are unchanged. |
 | `video-toolkit/skills/video-dashboard/SKILL.md` | Blocked loopback URL literal | Refers to the server-reported loopback origin and retains the exact dashboard path. |
 | `visual-explainer/SKILL.md` | Blocked embedded-data URL, unavailable vendor runtime, and deployment wrapper | Uses reviewable relative assets, static fallbacks, selected safe templates/references, and an explicit publication confirmation gate. |
@@ -38,7 +38,8 @@ upstream commit.
   `visual-explainer/references/slide-patterns.md` replace embedded-data examples
   with explicit relative asset files so generated media stays separately
   reviewable.
-- `security-toolkit/skills/secure-auth/references/upstream-secure-auth-details.md`
+- the companion-only audit file
+  `security-toolkit/skills/secure-auth/references/upstream-secure-auth-details.md`
   is an exact copy of the original `secure-auth/SKILL.md`; both SHA-256 values
   are `2c61e8a4e32ab9c2e04fdde5f0adcaa9c9644c7770d83561cc84c1a5fc9b9966`.
 

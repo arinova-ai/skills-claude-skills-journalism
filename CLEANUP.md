@@ -36,7 +36,8 @@ Adapted after the first production screen:
 - Open Knowledge Format instructions were made prompt-only and no longer claim
   unavailable client hooks, browser-session automation, or helper execution;
 - `secure-auth` was reduced below the 50,000-character prompt ceiling while its
-  exact upstream body was preserved in a selected reference file;
+  exact upstream body was preserved as a companion-only audit reference; the
+  verbatim historical example is deliberately not selected for import;
 - unsafe executable/vendor resources remain outside the import selection.
 
 Every content change is itemized in [`ADAPTATIONS.md`](ADAPTATIONS.md).
@@ -46,7 +47,8 @@ Verification for this companion:
 - exactly 63 `SKILL.md` files;
 - 50 `SKILL.md` files match the reviewed upstream commit byte for byte and 13
   preserve their identity with documented prompt-only adaptations;
-- `security-toolkit/skills/secure-auth/references/upstream-secure-auth-details.md`
+- the companion-only audit file
+  `security-toolkit/skills/secure-auth/references/upstream-secure-auth-details.md`
   matches the original `secure-auth/SKILL.md` at SHA-256
   `2c61e8a4e32ab9c2e04fdde5f0adcaa9c9644c7770d83561cc84c1a5fc9b9966`;
 - no symlinks;
