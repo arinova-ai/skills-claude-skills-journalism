@@ -361,14 +361,15 @@ class MultiArchiver:
 
 ```bash
 # Recommended: Docker Compose (v0.8.x ships with Chromium, yt-dlp,
-# wget, single-file, and other capture tools preinstalled).
+# a command-line downloader, single-file, and other capture tools preinstalled).
 mkdir ~/web-archives && cd ~/web-archives
-curl -O 'https://docker-compose.archivebox.io' && mv docker-compose.archivebox.io docker-compose.yml
+# Download the reviewed Compose file from https://docker-compose.archivebox.io
+# as docker-compose.yml through your normal bounded HTTPS fetch process.
 docker compose run archivebox init --setup
 docker compose up -d                    # start the web UI on :8000
 
 # Pip-based install still works but you'll need to install Chromium /
-# yt-dlp / wget / single-file separately for full capture coverage:
+# yt-dlp / a command-line downloader / single-file separately for full coverage:
 # pip install archivebox && archivebox init
 
 # Add URLs to archive (from inside the archive directory)
@@ -652,7 +653,7 @@ class PermaCC:
 | **Wayback Machine** | Historical research | Yes (free) | On request | Unlimited | Anonymous SPN ~15/min; auth via S3 keys raises cap |
 | **Archive.today** | Paywall bypass, quick saves | Informal | Never | 50MB | FBI subpoena Oct 2025; Wikipedia deprecated as citation source Feb 2026, avoid for legal/citation use |
 | **Perma.cc** | Legal citations | Yes (free tier) | By creator | Standard pages | Used by US courts; `Authorization: ApiKey <key>` |
-| **ArchiveBox** | Self-hosted, privacy | Local | Never | Disk space | v0.8 ships Docker Compose with Chromium / yt-dlp / wget |
+| **ArchiveBox** | Self-hosted, privacy | Local | Never | Disk space | v0.8 ships Docker Compose with Chromium / yt-dlp / a command-line downloader |
 | **Browsertrix Cloud** | Interactive / JS-heavy capture | Yes | By creator | Plan-based | Webrecorder.net successor to Conifer; outputs WARC |
 | **Conifer** | Interactive content | Yes | By creator | 5GB free | Older Webrecorder service; Browsertrix Cloud is the active path |
 

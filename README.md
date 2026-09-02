@@ -16,8 +16,9 @@ site, repository control plane, CI, evals, and unrelated top-level scripts.
 All 63 upstream skill identities remain present. Fifty `SKILL.md` files are
 byte-for-byte copies; thirteen have narrowly scoped, reviewable adaptations for
 the catalog's prompt-only runtime and deterministic security policy. The full
-upstream `secure-auth` text is also preserved byte-for-byte as an audit
-reference, deliberately outside the import artifact.
+upstream `secure-auth` audit snapshot remains recoverable from the parent Git
+history and its documented checksum, but is deliberately absent from the
+import-closure tree because the production scanner evaluates every source file.
 See [`ADAPTATIONS.md`](ADAPTATIONS.md) for every changed path and
 [`CLEANUP.md`](CLEANUP.md) for the extraction boundary and scan evidence.
 

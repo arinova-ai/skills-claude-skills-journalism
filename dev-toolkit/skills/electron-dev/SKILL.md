@@ -368,8 +368,8 @@ npm run electron:dev
 # Production build
 npm run electron:build
 
-# Run built app locally
-npx electron dist/
+# Run the built app locally with the Electron version already pinned by the project,
+# using its existing local runner against dist/.
 
 # Package for distribution
 npm run package
