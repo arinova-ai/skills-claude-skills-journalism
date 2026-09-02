@@ -73,9 +73,9 @@ Vary the choice each time. If the last diagram was dark and technical, make the 
 ### 2. Structure
 
 **Read the reference material** before generating. Don't memorize it, read it each time to absorb the patterns.
-- For text-heavy architecture overviews (card content matters more than topology): read `./templates/architecture.html`
+- For text-heavy architecture overviews (card content matters more than topology): read `./templates/architecture.html.txt`
 - For flowcharts, sequence diagrams, ER, state machines, mind maps, class diagrams, and C4: use the Mermaid and CSS guidance in the reference files
-- For data tables, comparisons, audits, feature matrices, source verification grids: read `./templates/data-table.html`
+- For data tables, comparisons, audits, feature matrices, source verification grids: read `./templates/data-table.html.txt`
 - For slide deck presentations (when `--slides` is explicitly requested): read `./references/slide-patterns.md`
 - For prose-heavy publishable pages (READMEs, articles, blog posts, essays): read the "Prose Page Elements" section in `./references/css-patterns.md` and "Typography by Content Voice" in `./references/libraries.md`
 
@@ -229,7 +229,7 @@ Three approaches depending on complexity:
 
 **Simple topology (under 10 elements):** Use Mermaid. A `graph TD` with custom `themeVariables` produces readable diagrams with automatic edge routing.
 
-**Text-heavy overviews (under 15 elements):** CSS Grid with explicit row/column placement. Sections as rounded cards with colored borders and monospace labels. Vertical flow arrows between sections. The reference template at `./templates/architecture.html` demonstrates this pattern with a newsroom CMS example. Use when cards need descriptions, code references, tool lists, or other rich content that Mermaid nodes can't hold.
+**Text-heavy overviews (under 15 elements):** CSS Grid with explicit row/column placement. Sections as rounded cards with colored borders and monospace labels. Vertical flow arrows between sections. The reference template at `./templates/architecture.html.txt` contains the reviewed HTML source and demonstrates this pattern with a newsroom CMS example. Use when cards need descriptions, code references, tool lists, or other rich content that Mermaid nodes can't hold.
 
 **Complex architectures (15+ elements):** Use the **hybrid pattern**, a simple Mermaid overview (5–8 nodes showing module relationships) followed by detailed CSS Grid cards for each module's internals. This gives you visual topology AND readable details. The overview diagram uses module names with `<small>` tags for key function names. The cards below show full function lists with new/modified badges. Never try to cram 15+ elements into a single Mermaid diagram, it will render unreadably small even with zoom controls.
 
@@ -262,7 +262,7 @@ Three approaches depending on complexity:
 **Flowchart-as-C4 pattern:** Persons → rounded nodes `(("Name"))`, systems → rectangles `["Name"]`, databases → cylinders `[("Name")]`, boundaries → `subgraph` blocks, relationships → labeled arrows `-->|"protocol"|`. Use `classDef` + `:::className` to visually differentiate external systems (e.g., dashed borders). This inherits `themeVariables`, `fontFamily`, and CSS overrides like every other Mermaid diagram.
 
 ### Data tables / comparisons / audits
-Use a real `<table>` element, not CSS Grid pretending to be a table. Tables get accessibility, copy-paste behavior, and column alignment for free. The reference template at `./templates/data-table.html` demonstrates all patterns below in the context of a source verification audit.
+Use a real `<table>` element, not CSS Grid pretending to be a table. Tables get accessibility, copy-paste behavior, and column alignment for free. The reference template at `./templates/data-table.html.txt` contains the reviewed HTML source and demonstrates all patterns below in the context of a source verification audit.
 
 **Use proactively.** Any time you'd render an ASCII box-drawing table in the terminal, generate an HTML table instead. This includes: requirement audits (request vs plan), feature comparisons, status reports, configuration matrices, test result summaries, dependency lists, permission tables, API endpoint inventories, **source verification grids, FOIA request logs, document inventories, claim-by-claim audits**, any structured rows and columns.
 

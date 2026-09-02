@@ -5,11 +5,10 @@ description: Secure authentication design and review using current OWASP, NIST, 
 
 # Secure authentication
 
-Authentication guidance changes quickly. Treat the detailed recipes preserved
-for audit in the companion's adjacent reference directory (file name
-`upstream-secure-auth-details.md`) as a reviewed source snapshot, not as
-timeless authority. That verbatim snapshot is deliberately outside the import
-artifact because it contains a credential-shaped historical example.
+Authentication guidance changes quickly. The detailed upstream recipe snapshot
+is preserved by checksum and in repository history for audit, but is not part
+of this import-closure tree because it contains a credential-shaped historical
+example. Treat it as historical evidence, not as timeless authority.
 
 ## 1. Refresh the security baseline
 
@@ -165,10 +164,9 @@ Return:
 
 ## Detailed source snapshot
 
-Use the companion audit file named `upstream-secure-auth-details.md` when
-reviewing the upstream implementation examples and extended rationale.
+The upstream implementation examples and extended rationale remain recoverable
+from the companion's repository history and the checksum in `ADAPTATIONS.md`.
 Revalidate every version number, dated claim, algorithm parameter, and
-provider-specific recipe before applying it. The audit file is intentionally
-outside the import artifact so the skill stays within the catalog's prompt-size
-limit without deleting upstream substance or importing its credential-shaped
-historical example.
+provider-specific recipe before applying it. The snapshot stays outside the
+import-closure tree so the skill remains below the catalog's prompt-size limit
+without importing its credential-shaped historical example.

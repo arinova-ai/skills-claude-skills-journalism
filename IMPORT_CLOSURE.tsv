@@ -1,0 +1,6 @@
+action	path	parent_sha256	result_path	result_sha256	basis
+remove	okf-wiki/example/scripts/validate.py	8fd5095b6d165f92644dd581b056ef52d334613576c727937840528566b0d12f	-	-	unselected helper contains private-key sentinel regex scanned across the complete source archive
+remove	okf-wiki/scripts/validate.py	8fd5095b6d165f92644dd581b056ef52d334613576c727937840528566b0d12f	-	-	unselected helper contains private-key sentinel regex scanned across the complete source archive
+remove	security-toolkit/skills/secure-auth/references/upstream-secure-auth-details.md	2c61e8a4e32ab9c2e04fdde5f0adcaa9c9644c7770d83561cc84c1a5fc9b9966	-	-	unselected audit snapshot contains a credential-shaped historical example scanned across the complete source archive
+copy	visual-explainer/templates/architecture.html	7f895ff8e8965d392fbb72ffea70f9e25faab19b9f87951abbb6960cf06cae7e	visual-explainer/templates/architecture.html.txt	7f895ff8e8965d392fbb72ffea70f9e25faab19b9f87951abbb6960cf06cae7e	byte-identical text alias supported by resource_index
+copy	visual-explainer/templates/data-table.html	c930f33870d87d9a484450c9337cd40af5775c979156212e4ff473b7cd1c2caa	visual-explainer/templates/data-table.html.txt	c930f33870d87d9a484450c9337cd40af5775c979156212e4ff473b7cd1c2caa	byte-identical text alias supported by resource_index

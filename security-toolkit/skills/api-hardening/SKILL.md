@@ -572,7 +572,7 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc.)
+    // Allow requests with no origin (mobile apps, command-line clients, etc.)
     if (!origin) {
       return callback(null, true);
     }
@@ -984,11 +984,11 @@ Every third-party `<script src>` and `<link rel="stylesheet">` SHOULD carry an `
   crossorigin="anonymous">
 ```
 
-Generate an SRI hash from a fetched asset:
+Generate an SRI hash from an asset fetched through the project's reviewed
+artifact-download step:
 
 ```bash
-curl -fsSL https://cdn.example.com/lib.min.js \
-  | openssl dgst -sha384 -binary \
+openssl dgst -sha384 -binary reviewed-lib.min.js \
   | openssl base64 -A
 ```
 

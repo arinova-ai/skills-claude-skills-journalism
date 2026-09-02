@@ -387,8 +387,8 @@ async function captureConsoleLogs(url) {
     const browser = await chromium.launch();
 
     // Emulate mobile device. Playwright ships an updated devices map per
-    // release; iPhone 15 / Pixel 8 are reasonable 2026 baselines. List with
-    // `npx playwright devices` if you need an exact name.
+    // release; iPhone 15 / Pixel 8 are reasonable 2026 baselines. Use the
+    // Playwright version already pinned by the project to list exact names.
     const context = await browser.newContext({
         ...devices['iPhone 15']
     });
